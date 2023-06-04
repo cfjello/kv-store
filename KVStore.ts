@@ -5,16 +5,14 @@ import { idSeq, uuid } from "./generators.ts"
 import { _ } from "./lodash.ts"
 import { CxError } from "./CxError.ts"
 import { assert } from "https://deno.land/std/testing/asserts.ts";
-import { reset } from "https://deno.land/std@0.177.0/fmt/colors.ts"
 
 const __filename = new URL('', import.meta.url).pathname
 const schemaCache = new Map<string, z.ZodSchema<unknown>>()
 export const kv = await Deno.openKv();
-// const uniqueId = uuid()
 //
 // Lock function
 //
-export async function lock<R>( lockName: string, callback: () => Promise<R>, timeout = 5000 ): Promise<R> {
+export async function lock<R>( lockName: string, callback: () => Promise<R> ): Promise<R> {
     const key = ['lock', lockName]
     let res: R 
     let _timer: ReturnType<typeof setTimeout>
@@ -398,26 +396,6 @@ export async function get<T>(
     }
     return Promise.resolve( kvRes )  
 }
-
-//
-// Index Function
-// 
-/*
-export async function dropSchema( key: string ): Promise<Deno.KvCommitResult | Deno.KvCommitError>  {
-    // const storeIdList: string[] = []
-    const itor = kv.list({ prefix: [key] })
-    for await (const entry of itor) {
-        const schema = entry.value
-
-        // storeIdList.push(entry.value as string)
-    }
-    
-    const kvRes = await kv.atomic()
-                .delete(['data', storeId ] )
-                .commit()
-
-}
-*/
 
 export async function getKeys( key: Deno.KvKey ): Promise<Deno.KvEntry<unknown>[]> {
     try {  

@@ -18,7 +18,7 @@ export type ErrLogType = {
 **/
 const __dirname = path.dirname( path.fromFileUrl(new URL('.', import.meta.url)) )
 
-export const $logDir = Deno.env.get("GRAPH_IOC_LOGDIR") ?? 'C:/Work/logs'
+export const $logDir = Deno.env.get("STORE_LOGDIR") ?? 'C:/Work/logs'
 
 // export let $logDir = _envLogDir !== undefined ? path.resolve(_envLogDir) : path.resolve(`${__dirname}/logs`)
 

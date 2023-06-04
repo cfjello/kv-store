@@ -148,7 +148,12 @@ Deno.test( {
             phone: "000-123-4567",
             group: null,
         };
-        const res = await store.register('U04USER', user_04, true, 'U03USER' )
+        const res = await store.register( {
+            key: 'U04USER', 
+            object: user_04, 
+            init: true, 
+            schema: 'U03USER' 
+         })
         expect(res.ok).toBeFalsy() 
         const err = !res.ok ? res.zodError: undefined
         expect( err ).toBeDefined()
@@ -187,7 +192,7 @@ Deno.test( {
         await store.set( 'U10', user )
         const rows = await store.getRows('U10')
         expect ( rows.length).toEqual(6)
-        console.log( `StoreIds: ${JSON.stringify(rows, undefined, 2)}`)
+        // console.log( `StoreIds: ${JSON.stringify(rows, undefined, 2)}`)
     },
     sanitizeResources: false,
     sanitizeOps: false
